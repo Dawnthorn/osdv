@@ -1,0 +1,69 @@
+.TH pvote 1 "September 9, 2008" "Debian GNU/Linux"
+
+.SH NAME
+pvote \- Prototype software for electronic voting machines.
+
+.SH SYNOPSIS
+.B pvote
+
+.SH DESCRIPTION
+.PP
+Pvote is prototype software for electronic voting machines.
+.sp
+Pvote is not a complete voting system. It is just the software program that
+interacts with the voter. Other necessary functions, such as voter
+registration, ballot preparation, and canvassing, are not part of Pvote. It is
+especially important that the voter interaction be correct because it is the
+only part of an election that must take place in private, whereas all other
+parts of an election can and should be subjected to public oversight and
+verification.
+.sp
+The central idea in Pvote is the prerendered voting interface. Pvote is
+designed so it can be the core user interface component for many kinds of
+voting machines, such as an electronic ballot marker or printer, a DRE (direct
+recording electronic) machine with or without a paper trail, or a system with
+end-to-end cryptographic verification. Any electronic voting system needs a
+reliable and auditable way to present the ballot to the voter. Pvote aims to
+fulfill that need.  Simplicity
+.sp
+Pvote is small. The current version is 460 lines of Python. It uses Pygame for
+graphics and audio. As a very rough comparison, the Diebold AccuVote TS
+software contains over 31000 lines of C++ and resource scripts; the Sequoia
+Edge software contains over 124000 lines of C. Python is easier to understand
+than C or C++.
+.sp
+A small program is easier to write correctly and easier to review for
+correctness. In a small program, it is harder for backdoors and security flaws
+to go unnoticed.  
+.sp
+.B Openness
+.sp
+Pvote, Python, and Pygame are all open source software.
+.sp
+Pvote's design is based on a platform-independent ballot file that describes
+exactly how the ballot will look, sound, and behave. This ballot file can be
+published before an election, just like a paper sample ballot, so that everyone
+can review and verify it. Anyone that uses Linux, Mac OS, or Windows can run
+Pvote to practice voting, educate other voters, or test a ballot for
+correctness and usability.
+.sp
+.B Accessibility
+.sp
+One of the main motivations for electronic voting machines is to provide
+improved accessibility for voters with disabilities. Pvote can offer
+simultaneous visual and audio output as well as simultaneous touchscreen and
+button input. Combining all these modes of communication enables better access
+for voters with a broad range of sensory, physical, and cognitive abilities and
+disabilities.
+
+.sp
+.B Flexibility
+.sp
+Pvote can be used for general or primary elections. It can handle
+straight-ticket voting or cross-endorsed candidates. Because Pvote uses a
+ballot file that contains prerendered images, Pvote can display ballots with
+any look and feel. Any layout of contests and choices is possible. The display
+can include logos or photographs. Ballots can be in any language. Pvote can
+also be used for elections with approval voting, range voting, or ranked
+voting. 
+

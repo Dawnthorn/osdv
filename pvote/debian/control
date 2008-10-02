@@ -1,0 +1,12 @@
+Source: pvote
+Section: misc
+Priority: optional
+Maintainer: Peter Haight <peterh@giantrabbit.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: pvote
+Architecture: all
+Depends: python, python-pygame
+Description: Prototype software for electronic voting machines
+ Pvote is an application for collecting votes for an election.
