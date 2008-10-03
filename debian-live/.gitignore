@@ -1,5 +1,5 @@
-binary/
+binary
 binary.iso
-cache/
-chroot/
+cache
+chroot
 .stage
