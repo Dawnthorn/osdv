@@ -21,6 +21,6 @@ cd $SOURCE_DIR
 unzip ../$SOURCE_DIST_FILE
 unzip ../$BALLOT_DIST_FILE
 cd ..
-cp -r debian $SOURCE_DIR
+cp -r ../debian $SOURCE_DIR
 cd $SOURCE_DIR
 dpkg-buildpackage -rfakeroot
