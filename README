@@ -1,0 +1,16 @@
+
+Requirements
+------------
+
+- Linux
+- live-helper (apt-get install live-helper).
+- debootstrap (apt-get install debootstrap).
+
+
+Building
+--------
+
+cd debian-live
+./build.sh
+
+
