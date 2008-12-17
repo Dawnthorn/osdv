@@ -22,7 +22,7 @@ The main goal is to remove packages from the final cd image. We want to remove
 any package we can that isn't required by the pvote application. I've done up
 an example one where I removed 'libvorbis' and 'libogg'. In the normal Debian
 distribution, 'libsdl-mixer' requires those and pvote requires 'libsdl-mixer'
-for audio. 
+for audio, but it is using raw wave audio files so it doesn't need OGG.
 
 Here's the procedure.
 
