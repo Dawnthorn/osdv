@@ -5,12 +5,60 @@ Requirements
 - Linux
 - live-helper (apt-get install live-helper).
 - debootstrap (apt-get install debootstrap).
+- You need to generate a gpg key for signing the repository that get's generated (gpg --gen-key).
 
 
 Building
 --------
 
 cd debian-live
-./build.sh
+./build.py
 
+
+Helping
+-------
+
+The main goal is to remove packages from the final cd image. We want to remove
+any package we can that isn't required by the pvote application. I've done up
+an example one where I removed 'libvorbis' and 'libogg'. In the normal Debian
+distribution, 'libsdl-mixer' requires those and pvote requires 'libsdl-mixer'
+for audio. 
+
+Here's the procedure.
+
+1. Build the CD using the 'Building' procedure above.
+2. Decide what package you are going to try and remove.
+3. Create an empty file with the same name as the debian source package, but
+with a '.patch' extension in the 'patches' directory. (e.g.
+patches/sdl-mixer1.2.patch).
+4. Run 'sudo ./build/build-packages.py <package_name>'. That will download the
+package into the 'build-chroot' chroot directory. That chroot is for patching
+and building the packages. It will put your package into
+'/tmp/work/<package_name>', extract it, apply the patch, and then build it.
+Since at first the patch is blank, you should just get the same patch that the
+original system used.
+5. Now go into that /tmp/work/<package_name> directory and modify the package
+so that you can remove some dependencies. In the sdl-mixer case, I changed the
+'debian/control' file to add the '--disable-music-ogg' line to configure which
+removes the ogg dependency.
+6. Create a patch file and replace the blank patch file you built earlier. Now
+you have to run 'sudo lh_clean' and then run './build.py' again.
+
+I recommend trying out your new CD using a virtual machine to boot the ISO file
+that is generated (binary.iso). I've been using VirtualBox, but anything that
+runs Linux should work. If everything worked, it should boot straight into the
+pvote application.
+
+Internals
+---------
+
+Right now this system is pretty kludgy. It builds the chroot for the live CD
+once to get the default packages, then it builds the patched packages in
+another chroot (build-chroot). Then it takes the default packages plus the
+patched packages and creates its own Debian repository in the 'repro'
+directory. Then it deletes the 'chroot' directory and starts building the CD
+again with the 'repro' repository instead of the default Debian one. This
+complicated process is necessary because the tools that build the CD image use
+the repository index files to determine the dependencies and the new packages
+have different dependencies than de default Debian ones.
 
