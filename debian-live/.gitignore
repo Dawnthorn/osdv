@@ -1,5 +1,7 @@
 binary
 binary.iso
+build-chroot
 cache
 chroot
 .stage
+.stage_build_chroot

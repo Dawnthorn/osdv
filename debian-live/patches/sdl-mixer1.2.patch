@@ -1,0 +1,30 @@
+--- debian/control.orig	2008-12-13 23:07:37.000000000 +0000
++++ debian/control	2008-12-13 23:08:10.000000000 +0000
+@@ -4,7 +4,7 @@
+ Maintainer: Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>
+ Uploaders: Sam Hocevar (Debian packages) <sam+deb@zoy.org>, Aurelien Jarno <aurel32@debian.org>, Josselin Mouette <joss@debian.org>
+ Standards-Version: 3.7.3
+-Build-Depends: debhelper (>= 4.1), quilt, libtool, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev (>= 1.0.0-3), libsmpeg-dev (>= 0.4.5+cvs20030824-1.3), libmikmod-dev
++Build-Depends: debhelper (>= 4.1), quilt, libtool, libsdl1.2-dev (>= 1.2.4), libsmpeg-dev (>= 0.4.5+cvs20030824-1.3), libmikmod-dev
+ 
+ Package: libsdl-mixer1.2
+ Architecture: any
+@@ -19,7 +19,7 @@
+ 
+ Package: libsdl-mixer1.2-dev
+ Architecture: any
+-Depends: libsdl-mixer1.2 (= ${binary:Version}), libc6-dev, libsdl1.2-dev (>= 1.2.4), libogg-dev, libvorbis-dev, libsmpeg-dev (>= 0.4.4-7), libmikmod-dev
++Depends: libsdl-mixer1.2 (= ${binary:Version}), libc6-dev, libsdl1.2-dev (>= 1.2.4), libsmpeg-dev (>= 0.4.4-7), libmikmod-dev
+ Conflicts: libsdl-mixer-dev, libsdl-mixer1.0-dev, libsdl-mixer1.1-dev
+ Section: libdevel
+ Description: development files for SDL1.2 mixer library
+--- debian/rules.orig	2008-12-13 23:05:18.000000000 +0000
++++ debian/rules	2008-12-13 23:06:56.000000000 +0000
+@@ -14,6 +14,7 @@
+ confflags += --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info
+ confflags += --enable-music-native-midi-gpl --enable-music-libmikmod
+ confflags += --disable-music-ogg-shared
++confflags += --disable-music-ogg
+ confflags += --disable-music-mp3-shared
+ confflags += "CPPFLAGS=-Wall"
+ confflags += "LDFLAGS=-Wl,-z,defs -Wl,-Bsymbolic -Wl,--as-needed"

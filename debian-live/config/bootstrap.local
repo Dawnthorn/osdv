@@ -31,22 +31,22 @@ LH_DISTRIBUTION="osdv"
 # $LH_MIRROR_BOOTSTRAP: set mirror to fetch packages from
 # (Default: file:///home/peterh/proj/osdv/debian-live/packages/)
 #LH_MIRROR_BOOTSTRAP="http://ftp.debian.org/debian/"
-LH_MIRROR_BOOTSTRAP="file:///repro"
+LH_MIRROR_BOOTSTRAP="%local_bootstrap_repro%"
 
 # $LH_MIRROR_BOOTSTRAP_SECURITY: set security mirror to fetch packages from
 # (Default: http://security.debian.org/)
 #LH_MIRROR_BOOTSTRAP_SECURITY="http://security.debian.org/"
-LH_MIRROR_BOOTSTRAP_SECURITY="file:///repro"
+LH_MIRROR_BOOTSTRAP_SECURITY="%local_bootstrap_repro%"
 
 # $LH_MIRROR_BINARY: set mirror which ends up in the image
 # (Default: file:///home/peterh/proj/osdv/debian-live/packages/)
 #LH_MIRROR_BINARY="http://ftp.debian.org/debian/"
-LH_MIRROR_BINARY="file:///repro"
+LH_MIRROR_BINARY="%local_repro%"
 
 # $LH_MIRROR_BINARY_SECURITY: set security mirror which ends up in the image
 # (Default: http://security.debian.org/)
 #LH_MIRROR_BINARY_SECURITY="http://security.debian.org/"
-LH_MIRROR_BINARY_SECURITY="file:///repro"
+LH_MIRROR_BINARY_SECURITY="%local_repro%"
 
 # $LH_SECTIONS: select section(s) to use
 # (Default: main)

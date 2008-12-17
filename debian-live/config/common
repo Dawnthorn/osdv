@@ -1,7 +1,7 @@
 # config/common - common options for live-helper(7)
 
 # $LH_APT: set package manager
-# (Default: aptitude)
+# (Default: apt-get)
 LH_APT="apt-get"
 
 # $LH_APT_FTP_PROXY: set apt/aptitude ftp proxy
@@ -61,8 +61,8 @@ LH_DEBCONF_NOWARNINGS="yes"
 LH_DEBCONF_PRIORITY="critical"
 
 # $LH_INITRAMFS: set initramfs hook
-# (Default: auto)
-LH_INITRAMFS="auto"
+# (Default: live-initramfs)
+LH_INITRAMFS="live-initramfs"
 
 # $LH_FDISK: set fdisk program
 # (Default: autodetected)

@@ -1,0 +1,15 @@
+Origin: OSDV
+Label: osdv
+Suite: lenny
+Codename: osdv
+Architectures: i386 source
+Components: main non-free contrib
+Description: Packages to build the OSDV distro.
+SignWith: yes
+
+Codename: osdv/updates
+Label: osdv-updates
+Suite: lenny
+Architectures: i386 source
+Components: main non-free contrib
+SignWith: yes
