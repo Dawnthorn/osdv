@@ -1,0 +1,7 @@
+default		0
+timeout		3
+hiddenmenu
+
+title		OSDV Linux
+kernel		/boot/vmlinuz-2.6.28.3
+
