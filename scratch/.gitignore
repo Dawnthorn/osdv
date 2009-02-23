@@ -1,0 +1,6 @@
+*.pyc
+chroot
+iso
+osdv.iso
+sources
+state

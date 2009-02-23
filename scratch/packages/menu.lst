@@ -3,5 +3,5 @@ timeout		3
 hiddenmenu
 
 title		OSDV Linux
-kernel		/boot/vmlinuz-2.6.28.3
+kernel		/boot/vmlinuz-2.6.28.3 root=/dev/sr0
 

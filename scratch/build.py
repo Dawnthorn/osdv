@@ -8,9 +8,29 @@ import watchcmd
 sys.path.insert(0, 'packages')
 
 class Builder:
+  def chroot(self, name, command, dir_name = None, ignore_result = False):
+    self.sudo(name, "chroot chroot /bin/bash -c 'cd %s && %s'" % (dir_name, command), None, ignore_result)
+
+
+  def copy(self, source, target):
+    target_dir_name = os.path.dirname(target)
+    self.mkdir(target_dir_name)
+    self.sudo('copy-%s-%s' % (source, target), 'cp %s %s' % (source, target))
+
+
+  def mkdir(self, dir_name):
+    if not os.path.exists(dir_name):
+      self.sudo('mkdir-%s' % dir_name, 'mkdir -p %s' % (dir_name))
+
+
+  def mknod(self, node_name, type, major, minor):
+    self.sudo('mknod-%s-%s-%i-%i' % (node_name, type, major, minor), "chroot iso /bin/sh -c 'cd /dev && mknod %s %s %i %i'" % (node_name, type, major, minor))
+
+
   def run(self, name, command, dir_name = None, ignore_result = False):
     if not os.path.exists('state'):
       os.mkdir('state')
+    name = name.replace('/', '_')
     stamp_file_name = 'state/.%s-done' % name
     if os.path.exists(stamp_file_name):
       return
@@ -24,10 +44,6 @@ class Builder:
 
   def sudo(self, name, command, dir_name = None, ignore_result = False):
     self.run(name, 'sudo %s' % command, dir_name, ignore_result)
-
-
-  def chroot(self, name, command, dir_name = None, ignore_result = False):
-    self.sudo(name, "chroot chroot /bin/bash -c 'cd %s && %s'" % (dir_name, command), None, ignore_result)
 
 
 
@@ -49,8 +65,8 @@ package_names = \
 [
     'module-init-tools',
     'linux',
-#    'busybox',
-#    'alsa-lib',
+    'busybox',
+    'alsa-lib',
 #    'sdl',
 #    'python',
 #    'pygame',
@@ -70,19 +86,6 @@ builder.sudo('make-iso-dir', 'mkdir iso', 'iso')
 builder.sudo('make-grub-dir', 'mkdir -p iso/boot/grub')
 builder.sudo('copy-stage2', 'cp /usr/lib/grub/i386-pc/stage2_eltorito iso/boot/grub')
 builder.sudo('copy-menu-lst', 'cp packages/menu.lst iso/boot/grub')
-module = load_module('linux')
-package = module.Package(builder)
-for file_name in package.install_file_names:
-  source_name = 'chroot%s' % file_name
-  target_name = 'iso%s' % file_name
-  target_dir_name = os.path.dirname(target_name)
-  if not os.path.exists(target_dir_name):
-    builder.sudo('mkdir-%s' % target_dir_name.replace('/', '_'), 'mkdir -p %s' % target_dir_name)
-  if os.path.isdir(source_name):
-    if not os.path.exists(target_name):
-      builder.sudo('mkdir-%s' % file_name.replace('/', '_'), 'mkdir -p %s' % file_name)
-  else:
-    builder.sudo('copy-%s' % os.path.basename(file_name), 'cp %s %s' % (source_name, target_name))
 builder.sudo('make-dev-dir', 'mkdir iso/dev')
 builder.sudo('make-proc-dir', 'mkdir iso/proc')
 builder.sudo('make-etc-dir', 'mkdir iso/etc')
@@ -90,4 +93,27 @@ builder.sudo('make-sbin-dir', 'mkdir iso/sbin')
 builder.sudo('make-bin-dir', 'mkdir iso/bin')
 builder.sudo('make-mnt-dir', 'mkdir iso/mnt')
 builder.sudo('make-usr-dir', 'mkdir iso/usr')
+builder.mkdir('iso/lib')
+builder.copy('chroot/lib/libc.so.6', 'iso/lib/')
+builder.copy('chroot/lib/ld-linux.so.2', 'iso/lib/')
+builder.copy('packages/passwd', 'iso/etc/')
+builder.copy('packages/shadow', 'iso/etc/')
+builder.copy('packages/group', 'iso/etc/')
+builder.copy('packages/rcS', 'iso/etc/init.d/')
+builder.sudo('make-usr-dir', 'mkdir iso/usr')
+builder.mknod('console', 'c', 5, 1)
+builder.mknod('tty0', 'c', 4, 0)
+builder.mknod('tty1', 'c', 4, 1)
+builder.mknod('tty2', 'c', 4, 2)
+builder.mknod('tty3', 'c', 4, 3)
+builder.mknod('tty4', 'c', 4, 4)
+builder.mknod('tty5', 'c', 4, 5)
+builder.mknod('tty6', 'c', 4, 6)
+builder.mknod('tty7', 'c', 4, 7)
+
+
+for package_name in package_names:
+  module = load_module(package_name)
+  package = module.Package(builder)
+  package.install()
 builder.sudo('make-iso', 'mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o osdv.iso iso')

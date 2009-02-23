@@ -2,11 +2,12 @@ import package
 
 class Package(package.BasePackage):
   def __init__(self, builder):
-    package.BasePackage.__init__(self, builder)
     self.url = 'http://www.kernel.org/pub/linux/utils/kernel/module-init-tools/module-init-tools-3.5.tar.bz2'
     self.name = 'module-init-tools'
     self.source_file_name = 'module-init-tools-3.5.tar.bz2'
     self.extract_dir = 'module-init-tools-3.5'
+    package.BasePackage.__init__(self, builder)
+    self.install_list = []
 
 
   def build(self):

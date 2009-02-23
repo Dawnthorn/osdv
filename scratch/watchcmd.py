@@ -33,16 +33,10 @@ def run(command, ignore_result = False):
       if result[0] != 0 or result[1] != 0:
 	child_result = result[1]
 	done = True
-    result = select.select([process.stdout, process.stderr], [], [], 1)
-    for file in result[0]:
-      if file == process.stdout:
-	sys.stdout.write(file.readline())
-      else:
-	sys.stderr.write(file.readline())
-    if child_result is None:
-      child_result = process.wait()
-    if not ignore_result:
-      if child_result != 0:
-	raise WatchcmdException("Execution of '%s' failed with return code %d." % (command, child_result))
-    return child_result
+  if child_result is None:
+    child_result = process.wait()
+  if not ignore_result:
+    if child_result != 0:
+      raise WatchcmdException("Execution of '%s' failed with return code %d." % (command, child_result))
+  return child_result
 
